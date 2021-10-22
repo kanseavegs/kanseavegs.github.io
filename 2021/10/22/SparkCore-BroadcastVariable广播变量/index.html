@@ -1,0 +1,568 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Yuan's Library" href="http://spark.kanseaveg.xyz/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Yuan's Library" href="http://spark.kanseaveg.xyz/atom.xml" />
+<link rel="alternate" type="application/json" title="Yuan's Library" href="http://spark.kanseaveg.xyz/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Spark" />
+
+
+<link rel="canonical" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/">
+
+
+
+  <title>
+SparkCore-BroadcastVariable广播变量 - Spark |
+Big Data = Yuan's Library = for learning everything.</title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">SparkCore-BroadcastVariable广播变量
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2021-10-22 14:07:10">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2021-10-22T14:07:10+08:00">2021-10-22</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Big Data</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclh3brzpj20zk0m8ann.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclip4jbpj20zk0m87cv.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclil3m4ej20zk0m8tn8.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph4lm9i7j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipexe4oykj20zk0m87ji.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipex2cdtbj20zk0m8x6p.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/Spark/" itemprop="item" rel="index" title="In Spark"><span itemprop="name">Spark</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="Ah Yuan">
+    <meta itemprop="description" content="for learning everything., ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Yuan's Library">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h3 id="sparkcore-broadcastvariable广播变量"><a class="markdownIt-Anchor" href="#sparkcore-broadcastvariable广播变量">#</a> SparkCore-BroadcastVariable 广播变量</h3>
+<pre><code>package com.kanseaveg.rdd
+
+import org.apache.spark.broadcast.Broadcast
+import org.apache.spark.rdd.RDD
+import org.apache.spark.&#123;SparkConf, SparkContext&#125;
+
+/**
+ *                                      【广播变量】
+ *    [@href=&quot;https://www.bbsmax.com/A/QW5Yv9rMdm/&quot;] 
+ *    共享变量出现的原因：通常在向 Spark 传递函数时，比如使用map或reduce传条件或变量时，在driver端定义变量，但是集群中运行的每个任务都会得到这些变量的一份
+ *                     新的副本，更新这些副本的值driver端的对应变量并不会随之更新。Spark 的两个共享变量，广播变量与累加器分别为变量提供广播与聚合功能，突破了变量不能共享的限制。
+ *    Spark两种共享变量：广播变量（broadcast variable）与累加器（accumulator），广播变量常用来高效分发较大的对象，而累加器用来对信息进行聚合。
+ *
+ *                                      【广播变量 vs 累加器】
+ *    累加器就是只写变量 通常就是做事件统计用的 因为rdd是在不同的excutor去执行的 你在不同excutor中累加的结果 没办法汇总到一起 这个时候就需要累加器来帮忙完成
+ *    广播变量是只读变量 正常的话我们在driver定义一个变量 需要序列化 才能在excutor端使用  而且是每个task都需要传输一次 这样如果我们定义的对象很大的话就会产生大量的IO
+ *                     如果你把这个大对象定义成广播变量的话 我们只需要每个excutor发送一份就可以 如果task需要时 只需要从excutor拉取就可以了。可以减轻集群driver和executor间的通信压力，节省集群资源。
+ *
+ * 为什么要使用这个广播变量： 如果我们要在分布式计算里面分发大对象，例如：字典，集合，黑白名单等，这个都会由Driver端进行分发，
+ *                        一般来讲，如果这个变量不是广播变量，那么每个task就会分发一份，这在task数目十分多的情况下Driver的带宽会成为系统的瓶颈，
+ *                        而且会大量消耗task服务器上的资源，如果将这个变量声明为广播变量，那么知识每个executor拥有一份，这个executor启动的task
+ *                        会共享这个变量，节省了通信的成本和服务器的资源。
+ */
+object BroadCastVariable &#123;
+  def main(args: Array[String]): Unit = &#123;
+    val conf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;aaaa&quot;)
+    val sc = new SparkContext(conf)
+
+    /**
+     * sample: 过滤来访ip
+     */
+    val lineRdd = sc.textFile(&quot;datas/ip_list.txt&quot;);
+
+    //使用广播变量时，driver第一次向executor发送task时候，发送blackList，缓存到blockmanager，以后不会再发送
+    //在driver端进行广播blackList
+    val blackList = List[String](&quot;8.8.8.8&quot;,&quot;114.114.114.114&quot;);//定义黑名单ip
+    val broadCast: Broadcast[List[String]] = sc.broadcast(blackList)
+
+    //在executor端用broadCast.value获取blackList的值
+    val filterRdd: RDD[String] = lineRdd.filter(ip =&gt; !broadCast.value.contains(ip))
+    filterRdd.foreach(println)
+
+    sc.stop()
+  &#125;
+&#125;
+</code></pre>
+
+      <div class="tags">
+          <a href="/tags/Spark/" rel="tag"><i class="ic i-tag"></i> Spark</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2021-10-22 14:51:11" itemprop="dateModified" datetime="2021-10-22T14:51:11+08:00">2021-10-22</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="Ah Yuan WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="Ah Yuan Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="Ah Yuan PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>Ah Yuan <i class="ic i-at"><em>@</em></i>Yuan's Library
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" title="SparkCore-BroadcastVariable广播变量">http://spark.kanseaveg.xyz/2021/10/22/SparkCore-BroadcastVariable广播变量/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicli9lfebj20zk0m84qp.jpg" title="SparkCore-RDD转换算子单值类型">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> Spark</span>
+  <h3>SparkCore-RDD转换算子单值类型</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclg5ms2rj20zk0m8u0x.jpg" title="SparkCore-ACC累加器">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> Spark</span>
+  <h3>SparkCore-ACC累加器</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#sparkcore-broadcastvariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text"> SparkCore-BroadcastVariable 广播变量</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" rel="bookmark" title="SparkCore-ACC累加器">SparkCore-ACC累加器</a></li><li class="active"><a href="/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" rel="bookmark" title="SparkCore-BroadcastVariable广播变量">SparkCore-BroadcastVariable广播变量</a></li><li><a href="/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="SparkCore-RDD转换算子单值类型">SparkCore-RDD转换算子单值类型</a></li><li><a href="/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="SparkCore-RDD转换算子双值类型">SparkCore-RDD转换算子双值类型</a></li><li><a href="/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/" rel="bookmark" title="SparkCore-RDD持久化">SparkCore-RDD持久化</a></li><li><a href="/2021/10/22/SparkCore-RDD%E8%A1%80%E7%BC%98%E5%85%B3%E7%B3%BB/" rel="bookmark" title="SparkCore-RDD转换算子-双值类型">SparkCore-RDD转换算子-双值类型</a></li><li><a href="/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/" rel="bookmark" title="SparkCore-RDD行动算子">SparkCore-RDD行动算子</a></li><li><a href="/2021/10/22/SparkCore-RDD%E9%94%AE%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="SparkCore-RDD转换算子键值类型">SparkCore-RDD转换算子键值类型</a></li><li><a href="/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/" rel="bookmark" title="SparkCore-广告使用量统计分析">SparkCore-广告使用量统计分析</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Ah Yuan"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">Ah Yuan</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">10</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">1</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">1</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>About</a>
+  </li>
+
+        
+  <li class="item dropdown">
+      <a href="javascript:void(0);"><i class="ic i-feather"></i>Posts</a>
+    <ul class="submenu">
+
+        
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>Archives</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>Categories</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>Tags</a>
+  </li>
+
+  </ul>
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2021/10/22/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/" title="SparkCore-RDD行动算子">SparkCore-RDD行动算子</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" title="SparkCore-BroadcastVariable广播变量">SparkCore-BroadcastVariable广播变量</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E8%A1%80%E7%BC%98%E5%85%B3%E7%B3%BB/" title="SparkCore-RDD转换算子-双值类型">SparkCore-RDD转换算子-双值类型</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/" title="SparkCore-广告使用量统计分析">SparkCore-广告使用量统计分析</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E9%94%AE%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子键值类型">SparkCore-RDD转换算子键值类型</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/" title="SparkCore-RDD持久化">SparkCore-RDD持久化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" title="SparkCore-ACC累加器">SparkCore-ACC累加器</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子单值类型">SparkCore-RDD转换算子单值类型</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子双值类型">SparkCore-RDD转换算子双值类型</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2021</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ah Yuan @ Big Data</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2021/10/22/SparkCore-BroadcastVariable广播变量/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,951 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Yuan's Library" href="http://spark.kanseaveg.xyz/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Yuan's Library" href="http://spark.kanseaveg.xyz/atom.xml" />
+<link rel="alternate" type="application/json" title="Yuan's Library" href="http://spark.kanseaveg.xyz/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Spark" />
+
+
+<link rel="canonical" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/">
+
+
+
+  <title>
+SparkCore-广告使用量统计分析 - Spark |
+Big Data = Yuan's Library = for learning everything.</title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">SparkCore-广告使用量统计分析
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2021-10-22 14:24:49">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2021-10-22T14:24:49+08:00">2021-10-22</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Big Data</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipexbei4hj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclh5u05ej20zk0m87df.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciuv0socj20zk0m8qes.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicljitigmj20zk0m87fp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipevgoki5j20zk0m84qp.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/Spark/" itemprop="item" rel="index" title="In Spark"><span itemprop="name">Spark</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="Ah Yuan">
+    <meta itemprop="description" content="for learning everything., ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Yuan's Library">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h3 id="sparkcore-广告使用量统计分析"><a class="markdownIt-Anchor" href="#sparkcore-广告使用量统计分析">#</a> SparkCore - 广告使用量统计分析</h3>
+<h5 id="adsrdddemoscala"><a class="markdownIt-Anchor" href="#adsrdddemoscala">#</a> AdsRDDdemo.scala</h5>
+<pre><code>package com.kanseaveg.rdd
+
+import org.apache.spark.rdd.RDD
+import org.apache.spark.&#123;SparkConf, SparkContext&#125;
+
+/**
+ * 案例实操  https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E5%AE%9E%E9%99%85%E6%A1%88%E4%BE%8B-1.png
+ * agent.log：时间戳，省份，城市，用户，广告，中间字段使用空格分隔。
+ * 需求描述: 统计出每一个省份每个广告被点击数量排行的 Top3
+ */
+object AdsRDDdemo &#123;
+  def main(args: Array[String]): Unit = &#123;
+
+    val conf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;AdsRDDdemo&quot;)
+    val sc = new SparkContext(conf)
+    //1.从agent.log中获取原始数据：时间戳，省份，城市，用户，广告
+    val rawData: RDD[String] = sc.textFile(&quot;datas/agent.log&quot;)
+    //2.将原始数据进行初步清晰，方便统计 ： 时间戳，省份，城市，用户，广告 to ((省份，广告),1)
+    val dataRdd: RDD[((String, String), Int)] = rawData.map(line =&gt; &#123;
+      val eachLine: Array[String] = line.split(&quot; &quot;)
+      ((eachLine(1), eachLine(4)), 1)
+    &#125;)
+    //3.将转换结构后的数据进行分组聚合 ： ((省份，广告),1) to ((省份，广告),sum)
+    val reduceRdd: RDD[((String, String), Int)] = dataRdd.reduceByKey(_ + _)
+    //4.将聚合的结果进行结构的转换 ((省份，广告),sum) =&gt; (省份，(广告,sum)) ,三种方法均可
+
+    val mapRdd: RDD[(String, (String, Int))] = reduceRdd.map( data =&gt; &#123; (data._1._1,(data._1._2,data._2)) &#125;)
+//    val mapRdd: RDD[(String, (String, Int))] = reduceRdd.map(
+//      data =&gt; &#123;
+//        val tp: (String, String) = data._1
+//        (tp._1, (tp._2, data._2))
+//      &#125;)
+//    val mapRdd: RDD[(String, (String, Int))] = reduceRdd.map &#123; case ((province, ads), sum) =&gt; &#123;
+//      (province, (ads, sum))
+//    &#125;&#125;
+
+
+
+    //5.将转换结构后的数据根据省份进行分组 (省份，[(广告A,sumA),广告B,sumB)])
+    val groupRdd: RDD[(String, Iterable[(String, Int)])] = mapRdd.groupByKey()
+    //6.将扥组后的数据组内降序排序，取前三名打印到控制台
+    val resultRdd: RDD[(String, List[(String, Int)])] = groupRdd.mapValues(iter =&gt; &#123;
+      iter.toList.sortBy(-_._2).take(3)
+    &#125;) //key不变,对value进行排序 ,-号表示倒序
+    resultRdd.collect().foreach(println)
+
+
+    /**
+     * 一行写法
+     * sc.textFile(&quot;datas/agent.log&quot;).map( l =&gt; ((l.split(&quot; &quot;)(1),l.split(&quot; &quot;)(4)),1))
+     * .reduceByKey(_+_).map(d=&gt;(d._1._1,(d._1._2,d._2))).groupByKey()
+     * .mapValues(_.toList.sortBy(-_._2).take(3)).collect().foreach(println)
+     */
+
+    /**
+     * (省份, 每省前三名(广告x,点击数量))
+     * (4,List((12,25), (2,22), (16,22)))
+     * (8,List((2,27), (20,23), (11,22)))
+     * (6,List((16,23), (24,21), (22,20)))
+     * (0,List((2,29), (24,25), (26,24)))
+     * (2,List((6,24), (21,23), (29,20)))
+     * (7,List((16,26), (26,25), (1,23)))
+     * (5,List((14,26), (21,21), (12,21)))
+     * (9,List((1,31), (28,21), (0,20)))
+     * (3,List((14,28), (28,27), (22,25)))
+     * (1,List((3,25), (6,23), (5,22)))
+     */
+
+  &#125;
+
+&#125;
+
+</code></pre>
+<h5 id="hotcategorytop10analysisscala"><a class="markdownIt-Anchor" href="#hotcategorytop10analysisscala">#</a> HotCategoryTop10Analysis.scala</h5>
+<pre><code>package com.kanseaveg.rdd
+
+import org.apache.spark.rdd.RDD
+import org.apache.spark.&#123;SparkConf, SparkContext&#125;
+
+/**
+ * top10热门品类分析：
+ * 分别统计每个品类点击的次数，下单的次数和支付的次数，并按照（点击总数，下单总数，支付总数）排序
+ * （品类，点击总数）（品类，下单总数）（品类，支付总数）
+ */
+object HotCategoryTop10Analysis &#123;
+  def main(args: Array[String]): Unit = &#123;
+    val conf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;aaaa&quot;)
+    val sc = new SparkContext(conf)
+    //1.读取原始日志数据
+    val dataRdd: RDD[String] = sc.textFile(&quot;datas/user_visit_action.csv&quot;)
+    dataRdd.cache()
+    /**
+     * 数据中包含用户的 4 种行为：搜索，点击，下单，支付：
+     *    1.每一行数据表示用户的一次行为，这个行为只能是 4 种行为的一种
+     *    2.如果搜索关键字为 null,表示数据不是搜索数据
+     *    3.如果点击的品类 ID 和产品 ID 为-1，表示数据不是点击数据
+     *    4.对于下单行为，一次可以下单多个商品，品类ID和产品ID可以是多个，id之间采用逗号分隔，如果本次不是下单行为则数据采用 null表示
+     *    5.支付行为和下单行为类似
+     *
+     * 预处理，数据采用下划线分隔数据
+     * 行为日期	用户 ID	Session的ID	页面id	动作的时间点
+     * 【搜索关键词	品类ID 商品 ID	一次订单中所有品类ID集合	一次订单中所有商品的ID集合	一次支付中所有品类的ID集合	一次支付中所有商品的ID集合】 城市id
+     *    5          6      7       8                   9                       10                      11
+     */
+
+    //2.统计品类的点击数量： （品类id-点击数量）
+    val clickRdd: RDD[(String, Int)] = dataRdd.filter(data =&gt; &#123;
+      val line: Array[String] = data.split(&quot;,&quot;)
+      line(6) != &quot;-1&quot; &amp;&amp; line(7) != &quot;-1&quot; //点击的品类 ID 和产品 ID 为-1，表示数据不是点击数据，过滤不是点击的数据
+    &#125;).map(data =&gt; (data.split(&quot;,&quot;)(6), 1)).reduceByKey(_ + _) //（品类id-点击数量）
+
+
+    //3.统计品类的下单数量： （品类id-下单数量）
+    val orderRdd: RDD[(String, Int)] = dataRdd.filter(data =&gt; &#123;
+      val line: Array[String] = data.split(&quot;,&quot;)
+      line(8) != &quot;null&quot; &amp;&amp; line(9) != &quot;null&quot; //品类ID和产品ID可以是多个，如果本次不是下单行为则数据采用 null表示
+    &#125;).flatMap(data =&gt; (data.split(&quot;,&quot;)(8).split(&quot;-&quot;).map(category_id =&gt; (category_id, 1)))) //扁平化，将品类id集合打散，然后写成（category_id，1）的形式
+      .reduceByKey(_ + _)
+
+    //4.统计品类的支付数量： （品类id-支付数量）
+    //支付行为和下单行为类似
+    val payRdd: RDD[(String, Int)] = dataRdd.filter(data =&gt; &#123;
+      val line: Array[String] = data.split(&quot;,&quot;)
+      line(10) != &quot;null&quot; &amp;&amp; line(11) != &quot;null&quot; //品类ID和产品ID可以是多个，如果本次不是支付行为则数据采用 null表示
+    &#125;).flatMap(data =&gt; (data.split(&quot;,&quot;)(10).split(&quot;-&quot;).map(category_id =&gt; (category_id, 1)))) //扁平化，将品类id集合打散，然后写成（category_id，1）的形式
+      .reduceByKey(_ + _)
+
+
+    //已获得clickRdd：（品类id-点击数量）orderRdd：（品类id-下单数量）payRdd：（品类id-支付数量），需要（品类id，（点击数量，下单数量，支付数量））形式
+    //5.将品类进行排序 取出前10名打印  排序规则：点击-下单-支付  使用元组排序即可（品类id，（点击数量，下单数量，支付数量））
+//    val coGroupRdd: RDD[(String, (Iterable[Int], Iterable[Int], Iterable[Int]))] = clickRdd.cogroup(orderRdd, payRdd) //cogroup = connect + group 但是cogroup存在shuffle 性能可能比较低
+//    val analysisRdd: RDD[(String, (Int, Int, Int))] = coGroupRdd.mapValues(tp =&gt; &#123;(tp._1.sum, tp._2.sum, tp._3.sum)&#125;) //（品类id，（点击数量，下单数量，支付数量））
+//    val resultRdd: Array[(String, (Int, Int, Int))] = analysisRdd.sortBy(_._2, false).take(10) //按照（点击数量，下单数量，支付数量）排序 取前10
+
+    /**
+     * cogroup改进
+     * （品类id-点击数量）=&gt;（品类id，（点击数量，0，0））
+     * （品类id-下单数量）=&gt; （品类id，（点击数量，下单数量，0））
+     * （品类id-支付数量）=&gt;（品类id，（点击数量，下单数量，支付数量））
+     */
+    val rdd1: RDD[(String, (Int, Int, Int))] = clickRdd.map(tp =&gt; (tp._1, (tp._2, 0, 0)))
+    val rdd2: RDD[(String, (Int, Int, Int))] = orderRdd.map(tp =&gt; (tp._1, (0, tp._2, 0)))
+    val rdd3: RDD[(String, (Int, Int, Int))] = payRdd.map(tp =&gt; (tp._1, (0, 0, tp._2)))
+    val totalRdd: RDD[(String, (Int, Int, Int))] = rdd1.union(rdd2).union(rdd3)
+    val coGroupReplace: RDD[(String, (Int, Int, Int))] = totalRdd.reduceByKey((a, b) =&gt; (a._1 + b._1, a._2 + b._2, a._3 + b._3))
+    val resultRdd: Array[(String, (Int, Int, Int))] = coGroupReplace.sortBy(_._2, false).take(10) //按照（点击数量，下单数量，支付数量）排序 取前10
+
+
+
+    //6.采集结果并打印
+    resultRdd.foreach(println)
+
+    /**
+     * (20,(3104,0,0))
+     * (15,(3098,0,0))
+     * (17,(3080,0,0))
+     * (14,(3079,0,0))
+     * (10,(3060,0,0))
+     * (13,(3056,0,0))
+     * (2,(3054,6044,4046))
+     * (5,(3032,0,0))
+     * (3,(3024,6044,4046))
+     * (7,(3020,0,0))
+     *
+     */
+
+    sc.stop()
+  &#125;
+
+&#125;
+
+</code></pre>
+<h5 id="hotcategorytop10analysis_advancedscala"><a class="markdownIt-Anchor" href="#hotcategorytop10analysis_advancedscala">#</a> HotCategoryTop10Analysis_Advanced.scala</h5>
+<pre><code>package com.kanseaveg.rdd
+
+import org.apache.spark.rdd.RDD
+import org.apache.spark.util.AccumulatorV2
+import org.apache.spark.&#123;SparkConf, SparkContext&#125;
+
+import scala.collection.mutable
+
+/**
+ * 数据中包含用户的 4 种行为：搜索，点击，下单，支付：
+ *    1.每一行数据表示用户的一次行为，这个行为只能是 4 种行为的一种
+ *    2.如果搜索关键字为 null,表示数据不是搜索数据
+ *    3.如果点击的品类 ID 和产品 ID 为-1，表示数据不是点击数据
+ *    4.对于下单行为，一次可以下单多个商品，品类ID和产品ID可以是多个，id之间采用逗号分隔，如果本次不是下单行为则数据采用 null表示
+ *    5.支付行为和下单行为类似
+ *
+ * 预处理，数据采用下划线分隔数据
+ * 行为日期	用户 ID	Session的ID	页面id	动作的时间点
+ * 【搜索关键词	品类ID 商品 ID	一次订单中所有品类ID集合	一次订单中所有商品的ID集合	一次支付中所有品类的ID集合	一次支付中所有商品的ID集合】 城市id
+ *    5          6      7       8                   9                       10                      11
+ */
+
+/**
+ * 2.将数据转换结构
+ *    点击的场合：（品类id，（1，0，0））
+ *    下单的场合：（品类id，（0，1，0））
+ *    支付的场合：（品类id，（0，0，1））
+ */
+
+/**
+ * top10热门品类分析：
+ * 分别统计每个品类点击的次数，下单的次数和支付的次数，并按照（点击总数，下单总数，支付总数）排序
+ * （品类，点击总数）（品类，下单总数）（品类，支付总数）
+ *
+ *
+ * 优化方法一：由于reduceBykey存在大量shuffle操作，于是优化预处理，提前将数据格式处理好，但是任然存在一个reducebykey shuffle操作
+ * 优化方法二：去除reduceBykey，使用累加器
+ */
+object HotCategoryTop10Analysis_Advanced &#123;
+  def main(args: Array[String]): Unit = &#123;
+    val conf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;aaaa&quot;)
+    val sc = new SparkContext(conf)
+    //1.读取原始日志数据
+    val dataRdd: RDD[String] = sc.textFile(&quot;datas/user_visit_action.csv&quot;)
+
+
+    /**
+     * 优化方法一：由于reduceBykey存在大量shuffle操作，于是优化预处理，提前将数据格式处理好，但是任然存在一个reducebykey shuffle操作
+     */
+//    val flatRdd: RDD[(String, (Int, Int, Int))] = dataRdd.flatMap(data =&gt; &#123;
+//      val cols = data.split(&quot;,&quot;) //按照列拍扁
+//      if (cols(6) != &quot;-1&quot; &amp;&amp; cols(7) != &quot;-1&quot;) &#123;
+//        List((cols(6), (1, 0, 0))) //统计品类的点击数量,点击的品类ID和产品ID不为-1，表示点击数据
+//      &#125; else if (cols(8) != &quot;null&quot; &amp;&amp; cols(9) != &quot;null&quot;) &#123;
+//        cols(8).split(&quot;-&quot;).map(category_id =&gt; (category_id, (0, 1, 0))) //品类ID &quot;1-2-3&quot;
+//      &#125; else if (cols(10) != &quot;null&quot; &amp;&amp; cols(11) != &quot;null&quot;) &#123;
+//        cols(10).split(&quot;-&quot;).map(category_id =&gt; (category_id, (0, 0, 1))) //品类ID &quot;1-2-3&quot;
+//      &#125; else &#123;
+//        Nil
+//      &#125;
+//    &#125;)
+//    val resultRdd: RDD[(String, (Int, Int, Int))] = flatRdd.reduceByKey((a, b) =&gt; (a._1 + b._1, a._2 + b._2, a._3 + b._3)) //    ( 品类ID，( 点击数量, 下单数量, 支付数量 ) )
+
+    /**
+     * 优化方法二：去除reduceBykey，使用自定义累加器
+     */
+    val acc = new HotCategoryAccumulator
+    sc.register(acc,&quot;HotCategoryAcc&quot;)
+    dataRdd.foreach(data =&gt; &#123;
+      val cols = data.split(&quot;,&quot;) //按照列拍扁
+
+      if (cols(6) != &quot;-1&quot; &amp;&amp; cols(7) != &quot;-1&quot;) &#123;
+        acc.add((cols(6),&quot;click&quot;))
+      &#125; else if (cols(8) != &quot;null&quot; &amp;&amp; cols(9) != &quot;null&quot;) &#123;
+        cols(8).split(&quot;-&quot;).foreach(cid =&gt; &#123;acc.add((cid,&quot;order&quot;))&#125;)
+      &#125; else if (cols(10) != &quot;null&quot; &amp;&amp; cols(11) != &quot;null&quot;) &#123;
+        cols(10).split(&quot;-&quot;).foreach(cid =&gt; &#123;acc.add((cid,&quot;pay&quot;))&#125;)
+      &#125; else &#123;
+        Nil
+      &#125;
+    &#125;)
+
+    val allHotCategories: mutable.Iterable[HotCategory] = acc.value.map(_._2)
+    val resultRdd: List[HotCategory] = allHotCategories.toList.sortWith((left, right) =&gt; &#123;
+      if (left.clickCnt &gt; right.clickCnt) true
+      else if (left.clickCnt == right.clickCnt) &#123;
+        if (left.orderCnt &gt; right.orderCnt) true
+        else if (left.orderCnt == right.orderCnt) &#123;
+          if (left.payCnt &gt; right.payCnt) true
+          else false
+        &#125; else false
+      &#125; else false
+    &#125;).take(10)
+
+
+
+
+    //采集结果并打印
+    resultRdd.foreach(println)
+
+    /**
+     * (20,(3104,0,0))
+     * (15,(3098,0,0))
+     * (17,(3080,0,0))
+     * (14,(3079,0,0))
+     * (10,(3060,0,0))
+     * (13,(3056,0,0))
+     * (2,(3054,6044,4046))
+     * (5,(3032,0,0))
+     * (3,(3024,6044,4046))
+     * (7,(3020,0,0))
+     *
+     */
+
+    sc.stop()
+  &#125;
+  case class HotCategory(cid: String, var clickCnt: Int, var orderCnt: Int, var payCnt: Int)
+
+  /**
+   * IN: (品类id，行为类型)
+   * OUT: Map[String, HotCategory]
+   */
+  class HotCategoryAccumulator extends AccumulatorV2[(String,String),mutable.Map[String, HotCategory]] &#123;
+
+    private val hcMap = mutable.Map[String,HotCategory]()
+
+    override def isZero: Boolean = hcMap.isEmpty
+
+    override def copy(): AccumulatorV2[(String, String), mutable.Map[String, HotCategory]] = new HotCategoryAccumulator()
+
+    override def reset(): Unit = hcMap.clear()
+
+    override def add(v: (String, String)): Unit = &#123;
+      val cid: String = v._1 //获取品类id
+      val actionType: String = v._2 //获取需要累加的类型
+      val category: HotCategory = hcMap.getOrElse(cid, HotCategory(cid, 0, 0, 0))
+
+      if (actionType == &quot;click&quot;) &#123;
+        category.clickCnt += 1
+      &#125; else if (actionType == &quot;order&quot;) &#123;
+        category.orderCnt += 1
+      &#125; else if (actionType == &quot;pay&quot;) &#123;
+        category.payCnt += 1
+      &#125;
+      hcMap.update(cid,category)
+    &#125;
+
+    override def merge(other: AccumulatorV2[(String, String), mutable.Map[String, HotCategory]]): Unit = &#123;
+      val map1 = this.hcMap
+      val map2 = other.value
+
+      //对于map2中每一个元素
+      map2.foreach( data =&gt; &#123;
+        val cid: String = data._1
+        val hcc: HotCategory = data._2 //other's Map's HotCategory
+        val category: HotCategory = map1.getOrElse(cid, HotCategory(cid, 0, 0, 0))
+        category.clickCnt += hcc.clickCnt
+        category.orderCnt += hcc.orderCnt
+        category.payCnt += hcc.payCnt
+        map1.update(cid, category)
+      &#125;)
+    &#125;
+
+    override def value: mutable.Map[String, HotCategory] = hcMap
+  &#125;
+
+
+&#125;
+
+</code></pre>
+<h5 id="hotcategorytop10sessionanalysisscala"><a class="markdownIt-Anchor" href="#hotcategorytop10sessionanalysisscala">#</a> HotCategoryTop10SessionAnalysis.scala</h5>
+<pre><code>import org.apache.spark.rdd.RDD
+import org.apache.spark.&#123;SparkConf, SparkContext&#125;
+
+/**
+ * 数据中包含用户的 4 种行为：搜索，点击，下单，支付：
+ *    1.每一行数据表示用户的一次行为，这个行为只能是 4 种行为的一种
+ *    2.如果搜索关键字为 null,表示数据不是搜索数据
+ *    3.如果点击的品类 ID 和产品 ID 为-1，表示数据不是点击数据
+ *    4.对于下单行为，一次可以下单多个商品，品类ID和产品ID可以是多个，id之间采用逗号分隔，如果本次不是下单行为则数据采用 null表示
+ *    5.支付行为和下单行为类似
+ *
+ * 预处理，数据采用下划线分隔数据
+ * 行为日期	用户 ID	Session的ID	页面id	动作的时间点
+ * 【搜索关键词	品类ID 商品 ID	一次订单中所有品类ID集合	一次订单中所有商品的ID集合	一次支付中所有品类的ID集合	一次支付中所有商品的ID集合】 城市id
+ *    5          6      7       8                   9                       10                      11
+ */
+
+/**
+ * top10热门品类分析：
+ * Top10 热门品类中每个品类的 Top10 活跃 Session 统计
+ */
+object HotCategoryTop10SessionAnalysis &#123;
+  def main(args: Array[String]): Unit = &#123;
+    val conf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;aaaa&quot;)
+    val sc = new SparkContext(conf)
+    val dataRdd: RDD[String] = sc.textFile(&quot;datas/user_visit_action.csv&quot;)
+
+    val top10Ids: Array[String] = top10Category(dataRdd)
+    //过滤Top10热门品类中的点击品类Ids
+    val clickCidsOfTop10: RDD[String] = dataRdd.filter(data =&gt; &#123;
+      val cols: Array[String] = data.split(&quot;,&quot;)
+      cols(6) != &quot;-1&quot; &amp;&amp; cols(7) != &quot;-1&quot; &amp;&amp; top10Ids.contains(cols(6)) //  点击的品类ID和产品 ID不为-1
+    &#125;)
+
+    //根据品类id和sessionid进行点击量统计
+    val reduceRdd: RDD[((String, String), Int)] = clickCidsOfTop10.map(data =&gt; &#123;
+      val cols: Array[String] = data.split(&quot;,&quot;)
+      ((cols(6), cols(2)), 1) // ((品类ID，sessionId),1))
+    &#125;).reduceByKey(_ + _) //// ((品类ID，sessionId),sum))
+
+
+    // 将统计的结果进行结构的转换 转换后进行分组聚合  ((品类ID，sessionId),sum)) to  (品类ID，(sessionId,sum)))
+    val groupRdd: RDD[(String, Iterable[(String, Int)])] = reduceRdd.map(data =&gt; (data._1._1, (data._1._2, data._2))).groupByKey() //  (品类ID，(sessionId,sum))) 按照品类id分组
+
+    //将分组后的数据进行点击量的排序，取前10名
+    val resultRdd: RDD[(String, List[(String, Int)])] = groupRdd.mapValues(iter =&gt; iter.toList.sortBy(_._2)(Ordering.Int.reverse).take(10)) //按照sum排序
+
+    resultRdd.foreach(println)
+
+    /**
+     * (4,List((5310bea7-9d61-4c9b-bfd7-7176c40a7d1f,6), (82956a11-86bc-4ab9-a7c5-2c602d5da84d,5), (83df2649-0b85-41d9-a1db-21392954b83d,5), (32f6cee8-4dc9-49e0-a05d-dbc0c1c9daae,5), (fd9a3aae-f5c2-425f-bb8f-8ed19db009fa,4), (9e3b5ab9-ba3e-4334-92df-6d851db2b75f,4), (0fb43e3d-78dd-474f-8892-08fb2c0a5132,4), (b2741f4f-a071-464c-bbc0-baf863fdc767,4), (23087483-70c1-4e5f-9d53-5f7020032929,4), (9e724bb6-8903-45d8-a18e-69e8386e6bad,4)))
+     * (8,List((040c420b-6709-4aa3-818e-4bfdfac59640,5), (9e5db7d9-4616-46bd-9cef-de671d113925,5), (9e35a818-784b-4723-8d1d-a19acda88f29,5), (06ad898c-0390-452a-88e7-2ca1c1d3355c,5), (0594ee8f-499d-49c6-8328-aa756467a2ad,5), (b3c63508-d10d-427e-a797-d44b172a40b1,5), (c7f1bea8-94dc-444c-b1e6-4b767c7c4f13,4), (dd89c2b4-d6f1-4112-b705-6ce263abdfd4,4), (57500425-a1d6-4dad-8ec4-224e443e567f,4), (738447c6-e65b-4fd9-8158-d244245b6633,4)))
+     * (20,List((710373f5-3a2e-4fec-9ddb-623d779273e6,6), (f632bbe4-e5ba-4dcf-91ef-89f9688376a9,6), (7d0014a4-c501-456f-9d30-fe6af79d933c,6), (3208994d-5867-4c8f-841f-42700aeabfb3,6), (c34d6503-b62b-4bab-9b85-7b0aefd8a5e0,5), (c9f87d6f-6a62-4e20-a2bb-aa0b690c134c,5), (78bc6698-ac26-4f1b-aaa0-05232f3322e5,5), (7ea420e7-eaa4-42dd-b517-470656fb87b6,5), (1c5e83e4-370c-4163-a387-6d61a0233e24,5), (8b9a0f5a-bff9-4f37-b3bb-6aa3c24d24f7,5)))
+     * (19,List((8b9a0f5a-bff9-4f37-b3bb-6aa3c24d24f7,7), (72b227ad-aaad-4c6c-965f-d2ed3428aa20,6), (592c3702-9886-4725-9869-a43cf972a7dc,5), (e068b484-7f57-4e7e-9db8-d6842ce43858,5), (6b53902b-93e2-4e08-be23-da9e12699dc5,5), (0700b3ec-90b1-42be-bc08-ae9a0081cfe9,4), (7d0014a4-c501-456f-9d30-fe6af79d933c,4), (dfa98b65-2ebc-4215-b080-0aff2f57d89a,4), (a5975ee5-91b1-4e22-b6f0-d4a12f8fd4ed,4), (577e5749-3594-448c-9771-e5f398a9cbb3,4)))
+     * (15,List((8b9a0f5a-bff9-4f37-b3bb-6aa3c24d24f7,8), (e01a941e-08e7-4fd6-aa77-eb10b5c2644b,8), (4c840047-6302-4e7d-8505-f5a0ac11da2f,5), (dd89c2b4-d6f1-4112-b705-6ce263abdfd4,5), (1a163c8d-3d58-4a76-8b28-d732bb51aec8,5), (57500425-a1d6-4dad-8ec4-224e443e567f,5), (0f0c33f2-a9c9-4264-befe-dce0d892526a,5), (f9936a33-3cad-4ac0-8153-77234c6cdb09,5), (d988514f-f1cd-4ddf-84b5-e11fb536e97a,4), (75cf4d14-87f4-4e39-8050-c3d164a002bc,4)))
+     * (6,List((8b9a0f5a-bff9-4f37-b3bb-6aa3c24d24f7,7), (bc9b9ad6-cff4-490e-a405-4c5b3b284fcb,6), (a5400810-3480-4fea-ba5a-3c77170082c3,5), (b7a3d1d4-fa2b-48c8-8bec-e07c59e02c6c,5), (f379a991-0ebc-4817-898d-86affa518835,4), (8b3c224f-66f7-48b6-a9e2-a8861968114c,4), (c1d705bf-bfb2-4a19-94af-c32ea0d5885d,4), (49e2529d-ff6d-46a8-9742-42c01170e394,4), (6dc1bfb3-92b4-44c4-b790-5fbc7ca414ed,4), (7328ce83-2c98-4d39-a1bf-1af472bb8c68,4)))
+     * (2,List((36003baf-6d64-49be-a047-9fc8c0e76ca8,6), (233e790a-1d96-4559-9205-471dc235161d,5), (1ecc15fb-85e4-4c0f-b68f-7351d9f77895,5), (e222b39c-8b13-4865-a8ba-892bd8919b5b,5), (72b227ad-aaad-4c6c-965f-d2ed3428aa20,5), (e5a2e03a-e650-446e-bff2-4845dc726278,5), (0d10c830-c48c-418c-b51b-66d1130b4b57,5), (fd1471b0-1b95-465f-95c7-256ec3e65e26,5), (fd6b98aa-6662-4d30-b63d-683264bf4a3d,5), (285278ad-affb-4b17-a442-3b83dae12576,5)))
+     * (17,List((6b53902b-93e2-4e08-be23-da9e12699dc5,7), (39b5df21-1c7f-4a8a-9766-84ee5f6954e0,6), (f632bbe4-e5ba-4dcf-91ef-89f9688376a9,6), (b21551c7-40e1-405c-81e2-d7caf53e6c07,5), (6501d135-cf17-4020-9852-51b6c3d5f1d7,5), (36003baf-6d64-49be-a047-9fc8c0e76ca8,5), (595f8ca5-7d03-4a32-956e-894821cd17f9,5), (8828d848-74b6-4bea-9a12-4c4d9f6e20c8,5), (5a841cd1-99ed-47fa-af9b-72183fd37b67,5), (7328ce83-2c98-4d39-a1bf-1af472bb8c68,5)))
+     * (13,List((d4125ad2-454d-40b6-b0d6-769ff58a26b0,6), (23087483-70c1-4e5f-9d53-5f7020032929,6), (0031c47d-1bcf-43d9-ad6a-252339b47082,5), (a550b6e4-6e9f-45f8-86ec-040919295efd,5), (7a20dbce-58a5-464b-86e6-7abef1cedd64,5), (8b9a0f5a-bff9-4f37-b3bb-6aa3c24d24f7,5), (0f0c33f2-a9c9-4264-befe-dce0d892526a,5), (70e2e082-08e6-4e14-bec6-6ac266e3bf90,5), (fe75781f-0aa1-4cfd-a11f-128ee35707db,5), (9584d531-47b6-455c-9843-24e45f47939b,5)))
+     *
+     */
+
+    sc.stop()
+  &#125;
+  def top10Category(dataRdd:RDD[String]) = &#123;
+    val flatRdd: RDD[(String, (Int, Int, Int))] = dataRdd.flatMap(data =&gt; &#123;
+      val cols = data.split(&quot;,&quot;) //按照列拍扁
+      if (cols(6) != &quot;-1&quot; &amp;&amp; cols(7) != &quot;-1&quot;) &#123;
+        List((cols(6), (1, 0, 0))) //统计品类的点击数量,点击的品类ID和产品ID不为-1，表示点击数据
+      &#125; else if (cols(8) != &quot;null&quot; &amp;&amp; cols(9) != &quot;null&quot;) &#123;
+        cols(8).split(&quot;-&quot;).map(category_id =&gt; (category_id, (0, 1, 0))) //品类ID &quot;1-2-3&quot;
+      &#125; else if (cols(10) != &quot;null&quot; &amp;&amp; cols(11) != &quot;null&quot;) &#123;
+        cols(10).split(&quot;-&quot;).map(category_id =&gt; (category_id, (0, 0, 1))) //品类ID &quot;1-2-3&quot;
+      &#125; else &#123;
+        Nil
+      &#125;
+    &#125;)
+    val resRdd: RDD[(String, (Int, Int, Int))] = flatRdd.reduceByKey((a, b) =&gt; (a._1 + b._1, a._2 + b._2, a._3 + b._3)) //    ( 品类ID，( 点击数量, 下单数量, 支付数量 ) )
+    resRdd.take(10).map(_._1)//只需要前10的品类ID
+  &#125;
+
+&#125;
+
+</code></pre>
+
+      <div class="tags">
+          <a href="/tags/Spark/" rel="tag"><i class="ic i-tag"></i> Spark</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2021-10-22 14:51:11" itemprop="dateModified" datetime="2021-10-22T14:51:11+08:00">2021-10-22</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="Ah Yuan WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="Ah Yuan Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="Ah Yuan PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>Ah Yuan <i class="ic i-at"><em>@</em></i>Yuan's Library
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/" title="SparkCore-广告使用量统计分析">http://spark.kanseaveg.xyz/2021/10/22/SparkCore-广告使用量统计分析/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipev1x5e4j20zk0m8b29.jpg" title="SparkCore-ACC累加器">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> Spark</span>
+  <h3>SparkCore-ACC累加器</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2021/10/22/hello-world/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicitspjpbj20zk0m81ky.jpg" title="Hello World">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Hello World</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#sparkcore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text"> SparkCore - 广告使用量统计分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#adsrdddemoscala"><span class="toc-number">1.0.1.</span> <span class="toc-text"> AdsRDDdemo.scala</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#hotcategorytop10analysisscala"><span class="toc-number">1.0.2.</span> <span class="toc-text"> HotCategoryTop10Analysis.scala</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#hotcategorytop10analysis_advancedscala"><span class="toc-number">1.0.3.</span> <span class="toc-text"> HotCategoryTop10Analysis_Advanced.scala</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#hotcategorytop10sessionanalysisscala"><span class="toc-number">1.0.4.</span> <span class="toc-text"> HotCategoryTop10SessionAnalysis.scala</span></a></li></ol></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" rel="bookmark" title="SparkCore-ACC累加器">SparkCore-ACC累加器</a></li><li><a href="/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" rel="bookmark" title="SparkCore-BroadcastVariable广播变量">SparkCore-BroadcastVariable广播变量</a></li><li><a href="/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="SparkCore-RDD转换算子单值类型">SparkCore-RDD转换算子单值类型</a></li><li><a href="/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="SparkCore-RDD转换算子双值类型">SparkCore-RDD转换算子双值类型</a></li><li><a href="/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/" rel="bookmark" title="SparkCore-RDD持久化">SparkCore-RDD持久化</a></li><li><a href="/2021/10/22/SparkCore-RDD%E8%A1%80%E7%BC%98%E5%85%B3%E7%B3%BB/" rel="bookmark" title="SparkCore-RDD转换算子-双值类型">SparkCore-RDD转换算子-双值类型</a></li><li><a href="/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/" rel="bookmark" title="SparkCore-RDD行动算子">SparkCore-RDD行动算子</a></li><li><a href="/2021/10/22/SparkCore-RDD%E9%94%AE%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="SparkCore-RDD转换算子键值类型">SparkCore-RDD转换算子键值类型</a></li><li class="active"><a href="/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/" rel="bookmark" title="SparkCore-广告使用量统计分析">SparkCore-广告使用量统计分析</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Ah Yuan"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">Ah Yuan</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">10</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">1</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">1</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>About</a>
+  </li>
+
+        
+  <li class="item dropdown">
+      <a href="javascript:void(0);"><i class="ic i-feather"></i>Posts</a>
+    <ul class="submenu">
+
+        
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>Archives</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>Categories</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>Tags</a>
+  </li>
+
+  </ul>
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2021/10/22/hello-world/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/" title="SparkCore-RDD持久化">SparkCore-RDD持久化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子双值类型">SparkCore-RDD转换算子双值类型</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2021/10/22/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子单值类型">SparkCore-RDD转换算子单值类型</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E9%94%AE%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子键值类型">SparkCore-RDD转换算子键值类型</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" title="SparkCore-BroadcastVariable广播变量">SparkCore-BroadcastVariable广播变量</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/" title="SparkCore-广告使用量统计分析">SparkCore-广告使用量统计分析</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E8%A1%80%E7%BC%98%E5%85%B3%E7%B3%BB/" title="SparkCore-RDD转换算子-双值类型">SparkCore-RDD转换算子-双值类型</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" title="SparkCore-ACC累加器">SparkCore-ACC累加器</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/" title="SparkCore-RDD行动算子">SparkCore-RDD行动算子</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2021</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ah Yuan @ Big Data</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2021/10/22/SparkCore-广告使用量统计分析/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
