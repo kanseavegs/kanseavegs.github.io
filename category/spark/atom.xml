@@ -4,6 +4,7 @@
     <title>Yuan&#39;s Library • Posts by &#34;spark&#34; category</title>
     <link href="http://spark.kanseaveg.xyz" />
     <updated>2021-10-22T06:24:49.000Z</updated>
+    <category term="Hadoop" />
     <category term="Spark" />
     <entry>
         <id>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/</id>
@@ -586,6 +587,115 @@ object BroadCastVariable &amp;#123;
         <updated>2021-10-22T06:07:10.000Z</updated>
     </entry>
     <entry>
+        <id>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/</id>
+        <title>SparkCore-RDD转换算子双值类型</title>
+        <link rel="alternate" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/"/>
+        <content type="html">&lt;h3 id=&#34;sparkcore-rdd转换算子-双值类型&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#sparkcore-rdd转换算子-双值类型&#34;&gt;#&lt;/a&gt; SparkCore-RDD 转换算子 - 双值类型&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;package com.kanseaveg.rdd
+
+import org.apache.spark.&amp;#123;SparkConf, SparkContext&amp;#125;
+import org.apache.spark.rdd.RDD
+
+/**
+ * 双值转换算子:  两个数据源之间的关联操作
+ */
+object DoubleValueRDD &amp;#123;
+  def main(args: Array[String]): Unit = &amp;#123;
+    val conf = new SparkConf().setMaster(&amp;quot;local[*]&amp;quot;).setAppName(&amp;quot;SingleValueRDD&amp;quot;)
+    val sc = new SparkContext(conf)
+    val rdd1: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
+    val rdd2: RDD[Int] = sc.makeRDD(List(3, 4, 5, 6))
+    //交集
+    val intersectionRdd: RDD[Int] = rdd1.intersection(rdd2)
+    println(intersectionRdd.collect().mkString(&amp;quot;,&amp;quot;)) //3,4
+    //并集
+    val unionRdd: RDD[Int] = rdd1.union(rdd2)
+    println(unionRdd.collect().mkString(&amp;quot;,&amp;quot;))  //1,2,3,4,3,4,5,6
+    //差集
+    val subtractRdd: RDD[Int] = rdd1.subtract(rdd2)
+    println(subtractRdd.collect().mkString(&amp;quot;,&amp;quot;))  //1,2
+    //拉链
+    val zipRdd: RDD[(Int, Int)] = rdd1.zip(rdd2)
+    println(zipRdd.collect().mkString(&amp;quot;,&amp;quot;)) //(1,3),(2,4),(3,5),(4,6)
+    
+  &amp;#125;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+        <category term="Spark" />
+        <updated>2021-10-22T06:07:10.000Z</updated>
+    </entry>
+    <entry>
+        <id>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/</id>
+        <title>SparkCore-RDD持久化</title>
+        <link rel="alternate" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/"/>
+        <content type="html">&lt;h3 id=&#34;sparkcore-rdd持久化&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#sparkcore-rdd持久化&#34;&gt;#&lt;/a&gt; SparkCore-RDD 持久化&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;package com.kanseaveg.rdd
+
+import org.apache.spark.rdd.RDD
+import org.apache.spark.&amp;#123;SparkConf, SparkContext&amp;#125;
+
+/**
+ * 持久化RDD : [@href=&amp;quot;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/20211015105854.png&amp;quot;]
+ */
+object PersistRDD &amp;#123;
+  def main(args: Array[String]): Unit = &amp;#123;
+
+    val conf = new SparkConf().setMaster(&amp;quot;local[*]&amp;quot;).setAppName(&amp;quot;AdsRDDdemo&amp;quot;)
+    val sc = new SparkContext(conf)
+    val baseRdd: RDD[String] = sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;, &amp;quot;Hello Spark&amp;quot;))
+
+    /**
+     * 未持久化： 由于RDD不存储数据，如果一个RDD需要重复使用，那么需要从头再次执行来获取数据
+     *            RDD对象是可以重用的，但是数据无法重用
+     */
+    val mapRdd: RDD[(String, Int)] = baseRdd.flatMap(_.split(&amp;quot; &amp;quot;)).map((_, 1))
+//    println(&amp;quot;********复用中间变量********&amp;quot;)
+//    mapRdd.reduceByKey(_+_).collect().foreach(println)
+//    mapRdd.groupByKey().collect().foreach(println)
+
+    /**
+     * cache持久化操作，仍调用persist，默认采用保存至内存中的策略
+     */
+//    println(&amp;quot;********通过 Cache 或者 Persist 方法将前面的计算结果缓存********&amp;quot;)
+//    mapRdd.cache()
+
+    /**
+     * presist持久化操作，可以设定持久化策略，保存在内存中还是磁盘中 StorageLevel
+     */
+//    mapRdd.persist(StorageLevel.DISK_ONLY)
+
+    /**
+     * 持久化操作会在行动算子执行时才会触发
+     */
+//    mapRdd.reduceByKey(_+_).collect().foreach(println)
+//    mapRdd.groupByKey().collect().foreach(println)
+
+    /**
+     * checkpoint检查点持久化操作，需要落盘指定检查点路径
+     *          检查点路径中保存的文件，在作业执行完后 不会被删除
+     */
+//    sc.setCheckpointDir(&amp;quot;cp&amp;quot;)
+//    mapRdd.checkpoint()
+
+    /**
+     * cache vs persist vs checkpoint
+     * cache： 临时存储数据在内存，会在血缘关系中添加新的依赖
+     * persist： ~在磁盘，涉及磁盘IO，性能低但数据安全，作业执行完毕，数据文件会被自动丢弃
+     * checkpoint: ~在磁盘，同样涉及磁盘IO，一般情况下联合cache一齐使用，会独立执行作业
+     */
+
+
+
+
+  &amp;#125;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+        <category term="Spark" />
+        <updated>2021-10-22T06:07:10.000Z</updated>
+    </entry>
+    <entry>
         <id>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/</id>
         <title>SparkCore-RDD转换算子单值类型</title>
         <link rel="alternate" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/"/>
@@ -710,115 +820,6 @@ object SingleValueRDD &amp;#123;
         <updated>2021-10-22T06:07:10.000Z</updated>
     </entry>
     <entry>
-        <id>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/</id>
-        <title>SparkCore-RDD转换算子双值类型</title>
-        <link rel="alternate" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/"/>
-        <content type="html">&lt;h3 id=&#34;sparkcore-rdd转换算子-双值类型&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#sparkcore-rdd转换算子-双值类型&#34;&gt;#&lt;/a&gt; SparkCore-RDD 转换算子 - 双值类型&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;package com.kanseaveg.rdd
-
-import org.apache.spark.&amp;#123;SparkConf, SparkContext&amp;#125;
-import org.apache.spark.rdd.RDD
-
-/**
- * 双值转换算子:  两个数据源之间的关联操作
- */
-object DoubleValueRDD &amp;#123;
-  def main(args: Array[String]): Unit = &amp;#123;
-    val conf = new SparkConf().setMaster(&amp;quot;local[*]&amp;quot;).setAppName(&amp;quot;SingleValueRDD&amp;quot;)
-    val sc = new SparkContext(conf)
-    val rdd1: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
-    val rdd2: RDD[Int] = sc.makeRDD(List(3, 4, 5, 6))
-    //交集
-    val intersectionRdd: RDD[Int] = rdd1.intersection(rdd2)
-    println(intersectionRdd.collect().mkString(&amp;quot;,&amp;quot;)) //3,4
-    //并集
-    val unionRdd: RDD[Int] = rdd1.union(rdd2)
-    println(unionRdd.collect().mkString(&amp;quot;,&amp;quot;))  //1,2,3,4,3,4,5,6
-    //差集
-    val subtractRdd: RDD[Int] = rdd1.subtract(rdd2)
-    println(subtractRdd.collect().mkString(&amp;quot;,&amp;quot;))  //1,2
-    //拉链
-    val zipRdd: RDD[(Int, Int)] = rdd1.zip(rdd2)
-    println(zipRdd.collect().mkString(&amp;quot;,&amp;quot;)) //(1,3),(2,4),(3,5),(4,6)
-    
-  &amp;#125;
-&amp;#125;
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-        <category term="Spark" />
-        <updated>2021-10-22T06:07:10.000Z</updated>
-    </entry>
-    <entry>
-        <id>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/</id>
-        <title>SparkCore-RDD持久化</title>
-        <link rel="alternate" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/"/>
-        <content type="html">&lt;h3 id=&#34;sparkcore-rdd持久化&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#sparkcore-rdd持久化&#34;&gt;#&lt;/a&gt; SparkCore-RDD 持久化&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;package com.kanseaveg.rdd
-
-import org.apache.spark.rdd.RDD
-import org.apache.spark.&amp;#123;SparkConf, SparkContext&amp;#125;
-
-/**
- * 持久化RDD : [@href=&amp;quot;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/20211015105854.png&amp;quot;]
- */
-object PersistRDD &amp;#123;
-  def main(args: Array[String]): Unit = &amp;#123;
-
-    val conf = new SparkConf().setMaster(&amp;quot;local[*]&amp;quot;).setAppName(&amp;quot;AdsRDDdemo&amp;quot;)
-    val sc = new SparkContext(conf)
-    val baseRdd: RDD[String] = sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;, &amp;quot;Hello Spark&amp;quot;))
-
-    /**
-     * 未持久化： 由于RDD不存储数据，如果一个RDD需要重复使用，那么需要从头再次执行来获取数据
-     *            RDD对象是可以重用的，但是数据无法重用
-     */
-    val mapRdd: RDD[(String, Int)] = baseRdd.flatMap(_.split(&amp;quot; &amp;quot;)).map((_, 1))
-//    println(&amp;quot;********复用中间变量********&amp;quot;)
-//    mapRdd.reduceByKey(_+_).collect().foreach(println)
-//    mapRdd.groupByKey().collect().foreach(println)
-
-    /**
-     * cache持久化操作，仍调用persist，默认采用保存至内存中的策略
-     */
-//    println(&amp;quot;********通过 Cache 或者 Persist 方法将前面的计算结果缓存********&amp;quot;)
-//    mapRdd.cache()
-
-    /**
-     * presist持久化操作，可以设定持久化策略，保存在内存中还是磁盘中 StorageLevel
-     */
-//    mapRdd.persist(StorageLevel.DISK_ONLY)
-
-    /**
-     * 持久化操作会在行动算子执行时才会触发
-     */
-//    mapRdd.reduceByKey(_+_).collect().foreach(println)
-//    mapRdd.groupByKey().collect().foreach(println)
-
-    /**
-     * checkpoint检查点持久化操作，需要落盘指定检查点路径
-     *          检查点路径中保存的文件，在作业执行完后 不会被删除
-     */
-//    sc.setCheckpointDir(&amp;quot;cp&amp;quot;)
-//    mapRdd.checkpoint()
-
-    /**
-     * cache vs persist vs checkpoint
-     * cache： 临时存储数据在内存，会在血缘关系中添加新的依赖
-     * persist： ~在磁盘，涉及磁盘IO，性能低但数据安全，作业执行完毕，数据文件会被自动丢弃
-     * checkpoint: ~在磁盘，同样涉及磁盘IO，一般情况下联合cache一齐使用，会独立执行作业
-     */
-
-
-
-
-  &amp;#125;
-&amp;#125;
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-        <category term="Spark" />
-        <updated>2021-10-22T06:07:10.000Z</updated>
-    </entry>
-    <entry>
         <id>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E8%A1%80%E7%BC%98%E5%85%B3%E7%B3%BB/</id>
         <title>SparkCore-RDD转换算子-双值类型</title>
         <link rel="alternate" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E8%A1%80%E7%BC%98%E5%85%B3%E7%B3%BB/"/>
@@ -900,124 +901,6 @@ object DependencyRDD &amp;#123;
     sc.stop()
   &amp;#125;
 
-&amp;#125;
-
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-        <category term="Spark" />
-        <updated>2021-10-22T06:07:10.000Z</updated>
-    </entry>
-    <entry>
-        <id>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/</id>
-        <title>SparkCore-RDD行动算子</title>
-        <link rel="alternate" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/"/>
-        <content type="html">&lt;h3 id=&#34;sparkcore-rdd行动算子&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#sparkcore-rdd行动算子&#34;&gt;#&lt;/a&gt; SparkCore-RDD 行动算子&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;package com.kanseaveg.rdd
-
-import org.apache.spark.rdd.RDD
-import org.apache.spark.&amp;#123;SparkConf, SparkContext&amp;#125;
-
-/**
- * 行动算子：触发作业执行
- *      底层实际调用的是 sc.runJob(this, (iter: Iterator[T]) =&amp;gt; iter.toArray)
- *       =&amp;gt; dagScheduler.runJob(rdd, cleanedFunc, partitions, callSite, resultHandler, localProperties.get)
- *       =&amp;gt; val waiter = submitJob(rdd, func, partitions, callSite, resultHandler, properties)
- *       =&amp;gt; eventProcessLoop.post(JobSubmitted(jobId, rdd, func2, partitions.toArray, callSite, waiter ....
- *       =&amp;gt; private[scheduler] def handleJobSubmitted(jobId: Int,....
- *       =&amp;gt; val job = new ActiveJob(jobId, finalStage, callSite, listener, properties) 创建activeJob 并提交执行
- *
- */
-object ActionRDD &amp;#123;
-  def main(args: Array[String]): Unit = &amp;#123;
-
-    val conf = new SparkConf().setMaster(&amp;quot;local[*]&amp;quot;).setAppName(&amp;quot;AdsRDDdemo&amp;quot;)
-    val sc = new SparkContext(conf)
-    val baseRdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4),2)
-
-    /**
-     * reduce 聚集 RDD 中的所有元素
-     */
-//    println(baseRdd.reduce(_ + _)) //10
-
-    /**
-     * collect: 将不同分区的数据按照分区顺序采集到Driver端内存中，形成数组
-     */
-//    println(baseRdd.collect().mkString(&amp;quot;,&amp;quot;)) //1,2,3,4
-
-    /**
-     * count: 统计数据源中数据的个数
-     * first： 获取数据源中数据的第一个
-     * take: 获取数据源中N个数据
-     * takeOrdered: 获取数据源中排序后的N个数据
-     */
-//    println(baseRdd.count()) //4
-//    println(baseRdd.first()) //1
-//    println(baseRdd.take(3).mkString(&amp;quot;,&amp;quot;)) //1,2,3
-//    println(baseRdd.takeOrdered(3).mkString(&amp;quot;,&amp;quot;)) //1,2,3
-
-    /**
-     * aggregate: 分区的数据通过初始值和分区内的数据进行聚合，然后再和初始值进行分区间的数据聚合
-     *      aggregateByKey vs aggregate
-     *      aggregateByKey: 初始值只会参与分区内计算  (10+3) + (10+7) = 30
-     *      aggregate： 初始值会参与分区内和分区间的计算 (10+3) + (10+7) + 10 = 40
-     * fold: aggregate简化版：aggregate分区内和分区间规则相同时，进行简化
-     */
-//    println(baseRdd.aggregate(10)(_ + _, _ + _)) //40
-//    println(baseRdd.fold(10)(_ + _))  //40
-
-    /**
-     * countByKey: 统计每种 key 的个数
-     * countByValue: 统计每种 value 的个数
-     */
-//    println(baseRdd.countByValue()) // Map(4 -&amp;gt; 1, 2 -&amp;gt; 1, 1 -&amp;gt; 1, 3 -&amp;gt; 1)
-//    println(sc.makeRDD(List((&amp;quot;a&amp;quot;, 1), (&amp;quot;a&amp;quot;, 20), (&amp;quot;a&amp;quot;, 10), (&amp;quot;b&amp;quot;, 66))).countByKey())  //Map(a -&amp;gt; 3, b -&amp;gt; 1)
-
-    /**
-     * 小小wordcount Sample: 8个实现wordcount方法
-     * (Hello,2)
-     * (Spark,1)
-     * (Scala,1)
-     */
-//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).groupBy(word=&amp;gt;word).mapValues(_.size).collect().foreach(println)
-//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).groupByKey().mapValues(_.size).collect().foreach(println) //存在shuffle 效率不高
-//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).reduceByKey(_+_).collect().foreach(println)
-//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).aggregateByKey(0)(_+_,_+_).collect().foreach(println)
-//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).foldByKey(0)(_+_).collect().foreach(println)
-//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).combineByKey(v=&amp;gt;v,(x:Int,y:Int)=&amp;gt;x+y,(x:Int,y:Int)=&amp;gt;x+y).collect().foreach(println)
-//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).countByKey().foreach(println)
-//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).countByValue().foreach(println)
-
-
-    /**
-     * save: 保存文件
-     * def saveAsTextFile(path: String): Unit
-     * def saveAsObjectFile(path: String): Unit
-     * def saveAsSequenceFile : //SparkCore-RDD行动算子规定数据的格式必须是键值类型
-     */
-//    baseRdd.saveAsTextFile(&amp;quot;output&amp;quot;)
-//    baseRdd.saveAsObjectFile(&amp;quot;output&amp;quot;)
-//    baseRdd.map((_,1)).saveAsSequenceFile(&amp;quot;output&amp;quot;)
-
-
-    /**
-     * foreach
-     */
-//    println(&amp;quot;在Driver端内存中执行打印操作&amp;quot;) //https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/20211013163016.png
-//    baseRdd.collect().foreach(println) //collect进行了分区顺序汇总，打印有序
-//    println(&amp;quot;在Executor端执行打印操作&amp;quot;)  //
-//    baseRdd.foreach(println) //分区直接打印，无序
-
-    /**
-     * PS：算子：Operator（操作）
-     *      RDD的方法和Scala集合对象的方法不一样哈
-     *      集合对象的方法都是在同一个节点的内存中完成的
-     *      RDD方法可以将计算逻辑发送到Executor端（分布式节点）执行
-     *      为了区分不同的处理效果，所以才将RDD的方法称为算子
-     *      RDD的方法外部操作都是在Driver端执行的，而方法内部的逻辑代码都是在Executor端执行的。
-     */
-
-
-  &amp;#125;
 &amp;#125;
 
 &lt;/code&gt;&lt;/pre&gt;
@@ -1182,6 +1065,124 @@ object KeyValueRDD &amp;#123;
      * (c,(CompactBuffer(),CompactBuffer(6, 7)))
      */
 //    sc.makeRDD(List((&amp;quot;a&amp;quot;, 1), (&amp;quot;b&amp;quot;, 2))).cogroup(sc.makeRDD(List((&amp;quot;a&amp;quot;, 4), (&amp;quot;b&amp;quot;, 5), (&amp;quot;c&amp;quot;, 6), (&amp;quot;c&amp;quot;, 7)))).collect.foreach(println)
+
+  &amp;#125;
+&amp;#125;
+
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+        <category term="Spark" />
+        <updated>2021-10-22T06:07:10.000Z</updated>
+    </entry>
+    <entry>
+        <id>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/</id>
+        <title>SparkCore-RDD行动算子</title>
+        <link rel="alternate" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/"/>
+        <content type="html">&lt;h3 id=&#34;sparkcore-rdd行动算子&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#sparkcore-rdd行动算子&#34;&gt;#&lt;/a&gt; SparkCore-RDD 行动算子&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;package com.kanseaveg.rdd
+
+import org.apache.spark.rdd.RDD
+import org.apache.spark.&amp;#123;SparkConf, SparkContext&amp;#125;
+
+/**
+ * 行动算子：触发作业执行
+ *      底层实际调用的是 sc.runJob(this, (iter: Iterator[T]) =&amp;gt; iter.toArray)
+ *       =&amp;gt; dagScheduler.runJob(rdd, cleanedFunc, partitions, callSite, resultHandler, localProperties.get)
+ *       =&amp;gt; val waiter = submitJob(rdd, func, partitions, callSite, resultHandler, properties)
+ *       =&amp;gt; eventProcessLoop.post(JobSubmitted(jobId, rdd, func2, partitions.toArray, callSite, waiter ....
+ *       =&amp;gt; private[scheduler] def handleJobSubmitted(jobId: Int,....
+ *       =&amp;gt; val job = new ActiveJob(jobId, finalStage, callSite, listener, properties) 创建activeJob 并提交执行
+ *
+ */
+object ActionRDD &amp;#123;
+  def main(args: Array[String]): Unit = &amp;#123;
+
+    val conf = new SparkConf().setMaster(&amp;quot;local[*]&amp;quot;).setAppName(&amp;quot;AdsRDDdemo&amp;quot;)
+    val sc = new SparkContext(conf)
+    val baseRdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4),2)
+
+    /**
+     * reduce 聚集 RDD 中的所有元素
+     */
+//    println(baseRdd.reduce(_ + _)) //10
+
+    /**
+     * collect: 将不同分区的数据按照分区顺序采集到Driver端内存中，形成数组
+     */
+//    println(baseRdd.collect().mkString(&amp;quot;,&amp;quot;)) //1,2,3,4
+
+    /**
+     * count: 统计数据源中数据的个数
+     * first： 获取数据源中数据的第一个
+     * take: 获取数据源中N个数据
+     * takeOrdered: 获取数据源中排序后的N个数据
+     */
+//    println(baseRdd.count()) //4
+//    println(baseRdd.first()) //1
+//    println(baseRdd.take(3).mkString(&amp;quot;,&amp;quot;)) //1,2,3
+//    println(baseRdd.takeOrdered(3).mkString(&amp;quot;,&amp;quot;)) //1,2,3
+
+    /**
+     * aggregate: 分区的数据通过初始值和分区内的数据进行聚合，然后再和初始值进行分区间的数据聚合
+     *      aggregateByKey vs aggregate
+     *      aggregateByKey: 初始值只会参与分区内计算  (10+3) + (10+7) = 30
+     *      aggregate： 初始值会参与分区内和分区间的计算 (10+3) + (10+7) + 10 = 40
+     * fold: aggregate简化版：aggregate分区内和分区间规则相同时，进行简化
+     */
+//    println(baseRdd.aggregate(10)(_ + _, _ + _)) //40
+//    println(baseRdd.fold(10)(_ + _))  //40
+
+    /**
+     * countByKey: 统计每种 key 的个数
+     * countByValue: 统计每种 value 的个数
+     */
+//    println(baseRdd.countByValue()) // Map(4 -&amp;gt; 1, 2 -&amp;gt; 1, 1 -&amp;gt; 1, 3 -&amp;gt; 1)
+//    println(sc.makeRDD(List((&amp;quot;a&amp;quot;, 1), (&amp;quot;a&amp;quot;, 20), (&amp;quot;a&amp;quot;, 10), (&amp;quot;b&amp;quot;, 66))).countByKey())  //Map(a -&amp;gt; 3, b -&amp;gt; 1)
+
+    /**
+     * 小小wordcount Sample: 8个实现wordcount方法
+     * (Hello,2)
+     * (Spark,1)
+     * (Scala,1)
+     */
+//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).groupBy(word=&amp;gt;word).mapValues(_.size).collect().foreach(println)
+//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).groupByKey().mapValues(_.size).collect().foreach(println) //存在shuffle 效率不高
+//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).reduceByKey(_+_).collect().foreach(println)
+//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).aggregateByKey(0)(_+_,_+_).collect().foreach(println)
+//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).foldByKey(0)(_+_).collect().foreach(println)
+//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).combineByKey(v=&amp;gt;v,(x:Int,y:Int)=&amp;gt;x+y,(x:Int,y:Int)=&amp;gt;x+y).collect().foreach(println)
+//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).map((_,1)).countByKey().foreach(println)
+//    sc.makeRDD(List(&amp;quot;Hello Scala&amp;quot;,&amp;quot;Hello Spark&amp;quot;)).flatMap(_.split(&amp;quot; &amp;quot;)).countByValue().foreach(println)
+
+
+    /**
+     * save: 保存文件
+     * def saveAsTextFile(path: String): Unit
+     * def saveAsObjectFile(path: String): Unit
+     * def saveAsSequenceFile : //SparkCore-RDD行动算子规定数据的格式必须是键值类型
+     */
+//    baseRdd.saveAsTextFile(&amp;quot;output&amp;quot;)
+//    baseRdd.saveAsObjectFile(&amp;quot;output&amp;quot;)
+//    baseRdd.map((_,1)).saveAsSequenceFile(&amp;quot;output&amp;quot;)
+
+
+    /**
+     * foreach
+     */
+//    println(&amp;quot;在Driver端内存中执行打印操作&amp;quot;) //https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/20211013163016.png
+//    baseRdd.collect().foreach(println) //collect进行了分区顺序汇总，打印有序
+//    println(&amp;quot;在Executor端执行打印操作&amp;quot;)  //
+//    baseRdd.foreach(println) //分区直接打印，无序
+
+    /**
+     * PS：算子：Operator（操作）
+     *      RDD的方法和Scala集合对象的方法不一样哈
+     *      集合对象的方法都是在同一个节点的内存中完成的
+     *      RDD方法可以将计算逻辑发送到Executor端（分布式节点）执行
+     *      为了区分不同的处理效果，所以才将RDD的方法称为算子
+     *      RDD的方法外部操作都是在Driver端执行的，而方法内部的逻辑代码都是在Executor端执行的。
+     */
+
 
   &amp;#125;
 &amp;#125;
