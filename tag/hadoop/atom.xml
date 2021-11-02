@@ -6,6 +6,7 @@
     <updated>2021-10-25T07:09:51.000Z</updated>
     <category term="Hadoop" />
     <category term="Spark" />
+    <category term="Zookeeper" />
     <entry>
         <id>http://spark.kanseaveg.xyz/2021/10/25/Hadoop3-Cluster-Installation/</id>
         <title>Hadoop3 Cluster Installation</title>

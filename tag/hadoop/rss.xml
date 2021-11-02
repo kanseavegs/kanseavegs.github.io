@@ -9,6 +9,7 @@
         <lastBuildDate>Mon, 25 Oct 2021 15:09:51 +0800</lastBuildDate>
         <category>Hadoop</category>
         <category>Spark</category>
+        <category>Zookeeper</category>
         <item>
             <guid isPermalink="true">http://spark.kanseaveg.xyz/2021/10/25/Hadoop3-Cluster-Installation/</guid>
             <title>Hadoop3 Cluster Installation</title>
