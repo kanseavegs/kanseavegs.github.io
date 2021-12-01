@@ -7,6 +7,7 @@
         <language>en</language>
         <pubDate>Fri, 22 Oct 2021 14:24:49 +0800</pubDate>
         <lastBuildDate>Fri, 22 Oct 2021 14:24:49 +0800</lastBuildDate>
+        <category>data-structure</category>
         <category>Hadoop</category>
         <category>Spark</category>
         <category>Zookeeper</category>
@@ -715,6 +716,45 @@ object SingleValueRDD &amp;#123;
  ]]></description>
         </item>
         <item>
+            <guid isPermalink="true">http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/</guid>
+            <title>SparkCore-RDD转换算子双值类型</title>
+            <link>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/</link>
+            <category>Spark</category>
+            <pubDate>Fri, 22 Oct 2021 14:07:10 +0800</pubDate>
+            <description><![CDATA[ &lt;h3 id=&#34;sparkcore-rdd转换算子-双值类型&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#sparkcore-rdd转换算子-双值类型&#34;&gt;#&lt;/a&gt; SparkCore-RDD 转换算子 - 双值类型&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;package com.kanseaveg.rdd
+
+import org.apache.spark.&amp;#123;SparkConf, SparkContext&amp;#125;
+import org.apache.spark.rdd.RDD
+
+/**
+ * 双值转换算子:  两个数据源之间的关联操作
+ */
+object DoubleValueRDD &amp;#123;
+  def main(args: Array[String]): Unit = &amp;#123;
+    val conf = new SparkConf().setMaster(&amp;quot;local[*]&amp;quot;).setAppName(&amp;quot;SingleValueRDD&amp;quot;)
+    val sc = new SparkContext(conf)
+    val rdd1: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
+    val rdd2: RDD[Int] = sc.makeRDD(List(3, 4, 5, 6))
+    //交集
+    val intersectionRdd: RDD[Int] = rdd1.intersection(rdd2)
+    println(intersectionRdd.collect().mkString(&amp;quot;,&amp;quot;)) //3,4
+    //并集
+    val unionRdd: RDD[Int] = rdd1.union(rdd2)
+    println(unionRdd.collect().mkString(&amp;quot;,&amp;quot;))  //1,2,3,4,3,4,5,6
+    //差集
+    val subtractRdd: RDD[Int] = rdd1.subtract(rdd2)
+    println(subtractRdd.collect().mkString(&amp;quot;,&amp;quot;))  //1,2
+    //拉链
+    val zipRdd: RDD[(Int, Int)] = rdd1.zip(rdd2)
+    println(zipRdd.collect().mkString(&amp;quot;,&amp;quot;)) //(1,3),(2,4),(3,5),(4,6)
+    
+  &amp;#125;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+ ]]></description>
+        </item>
+        <item>
             <guid isPermalink="true">http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/</guid>
             <title>SparkCore-RDD持久化</title>
             <link>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/</link>
@@ -779,45 +819,6 @@ object PersistRDD &amp;#123;
 
 
 
-  &amp;#125;
-&amp;#125;
-&lt;/code&gt;&lt;/pre&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/</guid>
-            <title>SparkCore-RDD转换算子双值类型</title>
-            <link>http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/</link>
-            <category>Spark</category>
-            <pubDate>Fri, 22 Oct 2021 14:07:10 +0800</pubDate>
-            <description><![CDATA[ &lt;h3 id=&#34;sparkcore-rdd转换算子-双值类型&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#sparkcore-rdd转换算子-双值类型&#34;&gt;#&lt;/a&gt; SparkCore-RDD 转换算子 - 双值类型&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;package com.kanseaveg.rdd
-
-import org.apache.spark.&amp;#123;SparkConf, SparkContext&amp;#125;
-import org.apache.spark.rdd.RDD
-
-/**
- * 双值转换算子:  两个数据源之间的关联操作
- */
-object DoubleValueRDD &amp;#123;
-  def main(args: Array[String]): Unit = &amp;#123;
-    val conf = new SparkConf().setMaster(&amp;quot;local[*]&amp;quot;).setAppName(&amp;quot;SingleValueRDD&amp;quot;)
-    val sc = new SparkContext(conf)
-    val rdd1: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
-    val rdd2: RDD[Int] = sc.makeRDD(List(3, 4, 5, 6))
-    //交集
-    val intersectionRdd: RDD[Int] = rdd1.intersection(rdd2)
-    println(intersectionRdd.collect().mkString(&amp;quot;,&amp;quot;)) //3,4
-    //并集
-    val unionRdd: RDD[Int] = rdd1.union(rdd2)
-    println(unionRdd.collect().mkString(&amp;quot;,&amp;quot;))  //1,2,3,4,3,4,5,6
-    //差集
-    val subtractRdd: RDD[Int] = rdd1.subtract(rdd2)
-    println(subtractRdd.collect().mkString(&amp;quot;,&amp;quot;))  //1,2
-    //拉链
-    val zipRdd: RDD[(Int, Int)] = rdd1.zip(rdd2)
-    println(zipRdd.collect().mkString(&amp;quot;,&amp;quot;)) //(1,3),(2,4),(3,5),(4,6)
-    
   &amp;#125;
 &amp;#125;
 &lt;/code&gt;&lt;/pre&gt;

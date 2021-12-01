@@ -24,15 +24,15 @@
 <link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
   
-  <meta name="keywords" content="Spark" />
+  <meta name="keywords" content="data-structure" />
 
 
-<link rel="canonical" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/">
+<link rel="canonical" href="http://spark.kanseaveg.xyz/2021/12/01/Data-Structure-%E9%93%BE%E8%A1%A8/">
 
 
 
   <title>
-SparkCore-RDD转换算子双值类型 - Spark |
+Data-Structure-链表 - data-structure |
 Big Data = Yuan's Library = for learning everything.</title>
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -60,16 +60,16 @@ Big Data = Yuan's Library = for learning everything.</title>
         <div id="brand">
           <div class="pjax">
           
-  <h1 itemprop="name headline">SparkCore-RDD转换算子双值类型
+  <h1 itemprop="name headline">Data-Structure-链表
   </h1>
   
 <div class="meta">
-  <span class="item" title="Created: 2021-10-22 14:07:10">
+  <span class="item" title="Created: 2021-12-01 15:01:36">
     <span class="icon">
       <i class="ic i-calendar"></i>
     </span>
     <span class="text">Posted on</span>
-    <time itemprop="dateCreated datePublished" datetime="2021-10-22T14:07:10+08:00">2021-10-22</time>
+    <time itemprop="dateCreated datePublished" datetime="2021-12-01T15:01:36+08:00">2021-12-01</time>
   </span>
 </div>
 
@@ -102,12 +102,12 @@ Big Data = Yuan's Library = for learning everything.</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicitzannuj20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicit4jrvuj20zk0m8785.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipevgoki5j20zk0m84qp.jpg"></li>
           <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciukx8a7j20zk0m8aio.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciusoyjnj219g0u0x56.jpg"></li>
           <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclx29mstj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicitf0kl1j20zk0m87fe.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciub8ja1j20zk0m81ky.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicm07ih54j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclip4jbpj20zk0m87cv.jpg"></li>
         </ul>
       </div>
     </header>
@@ -133,12 +133,12 @@ Big Data = Yuan's Library = for learning everything.</title>
 <div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
 <i class="ic i-home"></i>
 <span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
-<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/Spark/" itemprop="item" rel="index" title="In Spark"><span itemprop="name">Spark</span></a>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/data-structure/" itemprop="item" rel="index" title="In data-structure"><span itemprop="name">data-structure</span></a>
 <meta itemprop="position" content="1" /></span>
 </div>
 
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/">
+  <link itemprop="mainEntityOfPage" href="http://spark.kanseaveg.xyz/2021/12/01/Data-Structure-%E9%93%BE%E8%A1%A8/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -153,40 +153,34 @@ Big Data = Yuan's Library = for learning everything.</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h3 id="sparkcore-rdd转换算子-双值类型"><a class="markdownIt-Anchor" href="#sparkcore-rdd转换算子-双值类型">#</a> SparkCore-RDD 转换算子 - 双值类型</h3>
-<pre><code>package com.kanseaveg.rdd
-
-import org.apache.spark.&#123;SparkConf, SparkContext&#125;
-import org.apache.spark.rdd.RDD
-
-/**
- * 双值转换算子:  两个数据源之间的关联操作
- */
-object DoubleValueRDD &#123;
-  def main(args: Array[String]): Unit = &#123;
-    val conf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;SingleValueRDD&quot;)
-    val sc = new SparkContext(conf)
-    val rdd1: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
-    val rdd2: RDD[Int] = sc.makeRDD(List(3, 4, 5, 6))
-    //交集
-    val intersectionRdd: RDD[Int] = rdd1.intersection(rdd2)
-    println(intersectionRdd.collect().mkString(&quot;,&quot;)) //3,4
-    //并集
-    val unionRdd: RDD[Int] = rdd1.union(rdd2)
-    println(unionRdd.collect().mkString(&quot;,&quot;))  //1,2,3,4,3,4,5,6
-    //差集
-    val subtractRdd: RDD[Int] = rdd1.subtract(rdd2)
-    println(subtractRdd.collect().mkString(&quot;,&quot;))  //1,2
-    //拉链
-    val zipRdd: RDD[(Int, Int)] = rdd1.zip(rdd2)
-    println(zipRdd.collect().mkString(&quot;,&quot;)) //(1,3),(2,4),(3,5),(4,6)
-    
-  &#125;
-&#125;
-</code></pre>
+    <h3 id="线性表"><a class="markdownIt-Anchor" href="#线性表">#</a> 线性表</h3>
+<h4 id="顺序表"><a class="markdownIt-Anchor" href="#顺序表">#</a> 顺序表</h4>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-Init.png" alt="顺序表-Init"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-insert.png" alt="顺序表-insert"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-insert-advanced.png" alt="顺序表-insert-advanced"></p>
+<p><img data-src="../../../../../Pictures/DS/%E9%A1%BA%E5%BA%8F%E8%A1%A8-search.png" alt="顺序表-search"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-search.png" alt="顺序表-search"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-delete.png" alt="顺序表-delete"></p>
+<h4 id="链表"><a class="markdownIt-Anchor" href="#链表">#</a> 链表</h4>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-typedef.png" alt="链表-typedef"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-typedef-pro.png" alt="链表-typedef-pro"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-init.png" alt="链表-init"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-%E5%89%8D%E6%8F%92.png" alt="链表-insert-前插"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-%E5%90%8E%E6%8F%92.png" alt="链表-insert-后插"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-by-position-with-head-node.png" alt="链表-insert-by-position-with-head-node"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-by-position-without-head-node.png" alt="链表-insert-by-position-without-head-node"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-%E5%A4%B4%E6%8F%92.png" alt="链表-insert-头插"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-%E5%B0%BE%E6%8F%92.png" alt="链表-insert-尾插"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-search-by-value.png" alt="链表-search-by-value"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-search-by-position.png" alt="链表-search-by-position"></p>
+<h4 id="双链表"><a class="markdownIt-Anchor" href="#双链表">#</a> 双链表</h4>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E5%8F%8C%E9%93%BE%E8%A1%A8-init.png" alt="双链表-init"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E5%8F%8C%E9%93%BE%E8%A1%A8-insert.png" alt="双链表-insert"></p>
+<p><img data-src="https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E5%8F%8C%E9%93%BE%E8%A1%A8-delete.png" alt="双链表-delete"></p>
+<p>代码后续会进行补充</p>
 
       <div class="tags">
-          <a href="/tags/Spark/" rel="tag"><i class="ic i-tag"></i> Spark</a>
+          <a href="/tags/data-structure/" rel="tag"><i class="ic i-tag"></i> data-structure</a>
       </div>
   </div>
 
@@ -198,7 +192,7 @@ object DoubleValueRDD &#123;
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2021-10-22 14:51:11" itemprop="dateModified" datetime="2021-10-22T14:51:11+08:00">2021-10-22</time>
+    <time title="Modified: 2021-12-01 15:16:44" itemprop="dateModified" datetime="2021-12-01T15:16:44+08:00">2021-12-01</time>
   </span>
 </div>
 
@@ -234,7 +228,7 @@ object DoubleValueRDD &#123;
   </li>
   <li class="link">
     <strong>Post link: </strong>
-    <a href="http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子双值类型">http://spark.kanseaveg.xyz/2021/10/22/SparkCore-RDD双值类型/</a>
+    <a href="http://spark.kanseaveg.xyz/2021/12/01/Data-Structure-%E9%93%BE%E8%A1%A8/" title="Data-Structure-链表">http://spark.kanseaveg.xyz/2021/12/01/Data-Structure-链表/</a>
   </li>
   <li class="license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
@@ -253,22 +247,14 @@ object DoubleValueRDD &#123;
     <div class="item left">
       
 
-  <a href="/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipev1x5e4j20zk0m8b29.jpg" title="SparkCore-RDD持久化">
+  <a href="/2021/11/02/Zookeeper-Cluster-Installation/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexbei4hj20zk0m8npd.jpg" title="Zookeeper Cluster Installation">
   <span class="type">Previous Post</span>
-  <span class="category"><i class="ic i-flag"></i> Spark</span>
-  <h3>SparkCore-RDD持久化</h3>
+  <span class="category"><i class="ic i-flag"></i> Middlewares</span>
+  <h3>Zookeeper Cluster Installation</h3>
   </a>
 
     </div>
     <div class="item right">
-      
-
-  <a href="/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclflwv2aj20zk0m84qp.jpg" title="SparkCore-RDD转换算子单值类型">
-  <span class="type">Next Post</span>
-  <span class="category"><i class="ic i-flag"></i> Spark</span>
-  <h3>SparkCore-RDD转换算子单值类型</h3>
-  </a>
-
     </div>
 </div>
 
@@ -285,11 +271,11 @@ object DoubleValueRDD &#123;
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#sparkcore-rdd%E8%BD%AC%E6%8D%A2%E7%AE%97%E5%AD%90-%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text"> SparkCore-RDD 转换算子 - 双值类型</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text"> 线性表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text"> 顺序表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8"><span class="toc-number">1.2.</span> <span class="toc-text"> 链表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8C%E9%93%BE%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text"> 双链表</span></a></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
         <ul>
-          <li><a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" rel="bookmark" title="SparkCore-ACC累加器">SparkCore-ACC累加器</a></li><li><a href="/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" rel="bookmark" title="SparkCore-BroadcastVariable广播变量">SparkCore-BroadcastVariable广播变量</a></li><li><a href="/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="SparkCore-RDD转换算子单值类型">SparkCore-RDD转换算子单值类型</a></li><li class="active"><a href="/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="SparkCore-RDD转换算子双值类型">SparkCore-RDD转换算子双值类型</a></li><li><a href="/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/" rel="bookmark" title="SparkCore-RDD持久化">SparkCore-RDD持久化</a></li><li><a href="/2021/10/22/SparkCore-RDD%E8%A1%80%E7%BC%98%E5%85%B3%E7%B3%BB/" rel="bookmark" title="SparkCore-RDD转换算子-双值类型">SparkCore-RDD转换算子-双值类型</a></li><li><a href="/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/" rel="bookmark" title="SparkCore-RDD行动算子">SparkCore-RDD行动算子</a></li><li><a href="/2021/10/22/SparkCore-RDD%E9%94%AE%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="SparkCore-RDD转换算子键值类型">SparkCore-RDD转换算子键值类型</a></li><li><a href="/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/" rel="bookmark" title="SparkCore-广告使用量统计分析">SparkCore-广告使用量统计分析</a></li>
+          <li class="active"><a href="/2021/12/01/Data-Structure-%E9%93%BE%E8%A1%A8/" rel="bookmark" title="Data-Structure-链表">Data-Structure-链表</a></li>
         </ul>
       </div>
       <div class="overview panel" data-title="Overview">
@@ -366,12 +352,10 @@ object DoubleValueRDD &#123;
 
   <ul id="quick">
     <li class="prev pjax">
-        <a href="/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
     </li>
     <li class="up"><i class="ic i-arrow-up"></i></li>
     <li class="down"><i class="ic i-arrow-down"></i></li>
     <li class="next pjax">
-        <a href="/2021/10/22/SparkCore-RDD%E5%8D%95%E5%80%BC%E7%B1%BB%E5%9E%8B/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
     </li>
     <li class="percent"></li>
   </ul>
@@ -396,7 +380,7 @@ object DoubleValueRDD &#123;
 <a href="/categories/Spark/" title="In Spark">Spark</a>
 </div>
 
-    <span><a href="/2021/10/22/SparkCore-RDD%E9%94%AE%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子键值类型">SparkCore-RDD转换算子键值类型</a></span>
+    <span><a href="/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" title="SparkCore-BroadcastVariable广播变量">SparkCore-BroadcastVariable广播变量</a></span>
   </li>
 
       
@@ -406,17 +390,17 @@ object DoubleValueRDD &#123;
 <a href="/categories/Spark/" title="In Spark">Spark</a>
 </div>
 
-    <span><a href="/2021/10/22/SparkCore-%E5%B9%BF%E5%91%8A%E4%BD%BF%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/" title="SparkCore-广告使用量统计分析">SparkCore-广告使用量统计分析</a></span>
+    <span><a href="/2021/10/22/SparkCore-RDD%E8%A1%8C%E5%8A%A8%E7%AE%97%E5%AD%90/" title="SparkCore-RDD行动算子">SparkCore-RDD行动算子</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/Spark/" title="In Spark">Spark</a>
+<a href="/categories/Hadoop/" title="In Hadoop">Hadoop</a>
 </div>
 
-    <span><a href="/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子双值类型">SparkCore-RDD转换算子双值类型</a></span>
+    <span><a href="/2021/10/25/Hadoop3-Cluster-Installation/" title="Hadoop3 Cluster Installation">Hadoop3 Cluster Installation</a></span>
   </li>
 
       
@@ -433,20 +417,20 @@ object DoubleValueRDD &#123;
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/data-structure/" title="In data-structure">data-structure</a>
+<a href="/categories/Spark/" title="In Spark">Spark</a>
 </div>
 
-    <span><a href="/2021/12/01/Data-Structure-%E9%93%BE%E8%A1%A8/" title="Data-Structure-链表">Data-Structure-链表</a></span>
+    <span><a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" title="SparkCore-ACC累加器">SparkCore-ACC累加器</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/Hadoop/" title="In Hadoop">Hadoop</a>
+<a href="/categories/data-structure/" title="In data-structure">data-structure</a>
 </div>
 
-    <span><a href="/2021/10/25/Hadoop3-Cluster-Installation/" title="Hadoop3 Cluster Installation">Hadoop3 Cluster Installation</a></span>
+    <span><a href="/2021/12/01/Data-Structure-%E9%93%BE%E8%A1%A8/" title="Data-Structure-链表">Data-Structure-链表</a></span>
   </li>
 
       
@@ -466,16 +450,6 @@ object DoubleValueRDD &#123;
 <a href="/categories/Spark/" title="In Spark">Spark</a>
 </div>
 
-    <span><a href="/2021/10/22/SparkCore-BroadcastVariable%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" title="SparkCore-BroadcastVariable广播变量">SparkCore-BroadcastVariable广播变量</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/Spark/" title="In Spark">Spark</a>
-</div>
-
     <span><a href="/2021/10/22/SparkCore-RDD%E8%A1%80%E7%BC%98%E5%85%B3%E7%B3%BB/" title="SparkCore-RDD转换算子-双值类型">SparkCore-RDD转换算子-双值类型</a></span>
   </li>
 
@@ -486,7 +460,17 @@ object DoubleValueRDD &#123;
 <a href="/categories/Spark/" title="In Spark">Spark</a>
 </div>
 
-    <span><a href="/2021/10/22/SparkCore-ACC%E7%B4%AF%E5%8A%A0%E5%99%A8/" title="SparkCore-ACC累加器">SparkCore-ACC累加器</a></span>
+    <span><a href="/2021/10/22/SparkCore-RDD%E6%8C%81%E4%B9%85%E5%8C%96/" title="SparkCore-RDD持久化">SparkCore-RDD持久化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Spark/" title="In Spark">Spark</a>
+</div>
+
+    <span><a href="/2021/10/22/SparkCore-RDD%E5%8F%8C%E5%80%BC%E7%B1%BB%E5%9E%8B/" title="SparkCore-RDD转换算子双值类型">SparkCore-RDD转换算子双值类型</a></span>
   </li>
 
   </ul>
@@ -517,7 +501,7 @@ object DoubleValueRDD &#123;
   </div>
 <script data-config type="text/javascript">
   var LOCAL = {
-    path: '2021/10/22/SparkCore-RDD双值类型/',
+    path: '2021/12/01/Data-Structure-链表/',
     favicon: {
       show: "（●´3｀●）Goooood",
       hide: "(´Д｀)Booooom"

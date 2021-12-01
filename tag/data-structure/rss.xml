@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Yuan&#39;s Library • Posts by &#34;data-structure&#34; tag</title>
+        <link>http://spark.kanseaveg.xyz</link>
+        <description></description>
+        <language>en</language>
+        <pubDate>Wed, 01 Dec 2021 15:01:36 +0800</pubDate>
+        <lastBuildDate>Wed, 01 Dec 2021 15:01:36 +0800</lastBuildDate>
+        <category>data-structure</category>
+        <category>Hadoop</category>
+        <category>Spark</category>
+        <category>Zookeeper</category>
+        <item>
+            <guid isPermalink="true">http://spark.kanseaveg.xyz/2021/12/01/Data-Structure-%E9%93%BE%E8%A1%A8/</guid>
+            <title>Data-Structure-链表</title>
+            <link>http://spark.kanseaveg.xyz/2021/12/01/Data-Structure-%E9%93%BE%E8%A1%A8/</link>
+            <category>data-structure</category>
+            <pubDate>Wed, 01 Dec 2021 15:01:36 +0800</pubDate>
+            <description><![CDATA[ &lt;h3 id=&#34;线性表&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#线性表&#34;&gt;#&lt;/a&gt; 线性表&lt;/h3&gt;
+&lt;h4 id=&#34;顺序表&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#顺序表&#34;&gt;#&lt;/a&gt; 顺序表&lt;/h4&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-Init.png&#34; alt=&#34;顺序表-Init&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-insert.png&#34; alt=&#34;顺序表-insert&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-insert-advanced.png&#34; alt=&#34;顺序表-insert-advanced&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;../../../../../Pictures/DS/%E9%A1%BA%E5%BA%8F%E8%A1%A8-search.png&#34; alt=&#34;顺序表-search&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-search.png&#34; alt=&#34;顺序表-search&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%A1%BA%E5%BA%8F%E8%A1%A8-delete.png&#34; alt=&#34;顺序表-delete&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;链表&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#链表&#34;&gt;#&lt;/a&gt; 链表&lt;/h4&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-typedef.png&#34; alt=&#34;链表-typedef&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-typedef-pro.png&#34; alt=&#34;链表-typedef-pro&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-init.png&#34; alt=&#34;链表-init&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-%E5%89%8D%E6%8F%92.png&#34; alt=&#34;链表-insert-前插&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-%E5%90%8E%E6%8F%92.png&#34; alt=&#34;链表-insert-后插&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-by-position-with-head-node.png&#34; alt=&#34;链表-insert-by-position-with-head-node&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-by-position-without-head-node.png&#34; alt=&#34;链表-insert-by-position-without-head-node&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-%E5%A4%B4%E6%8F%92.png&#34; alt=&#34;链表-insert-头插&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-insert-%E5%B0%BE%E6%8F%92.png&#34; alt=&#34;链表-insert-尾插&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-search-by-value.png&#34; alt=&#34;链表-search-by-value&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E9%93%BE%E8%A1%A8-search-by-position.png&#34; alt=&#34;链表-search-by-position&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;双链表&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#双链表&#34;&gt;#&lt;/a&gt; 双链表&lt;/h4&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E5%8F%8C%E9%93%BE%E8%A1%A8-init.png&#34; alt=&#34;双链表-init&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E5%8F%8C%E9%93%BE%E8%A1%A8-insert.png&#34; alt=&#34;双链表-insert&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/kanseavegs/picgo_images/master/data/%E5%8F%8C%E9%93%BE%E8%A1%A8-delete.png&#34; alt=&#34;双链表-delete&#34;&gt;&lt;/p&gt;
+&lt;p&gt;代码后续会进行补充&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>
